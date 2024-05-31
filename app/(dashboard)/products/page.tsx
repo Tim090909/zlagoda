@@ -6,14 +6,14 @@ import { Product, columns } from "./_components/columns";
 import {sql} from '@/lib/db';
 export default async function Page() { 
     
-  const result = await sql`SELECT id, title, amount, status, price FROM Products;`;
+  const result = await sql`SELECT id_product, product_name, category_name, characteristics 
+  FROM product inner join category on Product.category_number=Category.category_number;`;
 
   const products_fdb: Product[] = result.map(row => ({
-  id: row.id,
-  title: row.title,
-  amount: row.amount,
-  status: row.status,
-  price: row.price,
+    id: row.id_product,
+    title: row.product_name,
+    category: row.category_name,
+    characteristics: row.characteristics
   }));
 
 

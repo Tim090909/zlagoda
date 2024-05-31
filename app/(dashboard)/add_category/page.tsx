@@ -15,10 +15,6 @@ import { Input } from "@/components/ui/input";
 const formSchema = z.object({
     title: z.string().min(1, {
         message: "Title is required"
-    }),
-    category_id: z.coerce.number(),
-    characteristics: z.string().min(10, {
-        message: "Characteristics is required"
     })
 })
 
@@ -28,9 +24,7 @@ const CreatePage = () => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: "",
-            category_id: 0,
-            characteristics: ""
+            title: ""
         },
     })
 
@@ -38,9 +32,9 @@ const CreatePage = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            const response = await axios.post("/api/products", values);
-            router.push(`/products`);
-            toast.success("Product adeded");
+            const response = await axios.post("/api/category", values);
+            router.push(`/category`);
+            toast.success("Category adeded");
         } catch{
             toast.error("Something went wrong");
         }
@@ -49,9 +43,9 @@ const CreatePage = () => {
     <div className=" max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 mt-16">
       <div>
         <h1 className="text-3xl font-semibold">
-            Add new product
+            Add new category
         </h1>
-        <p className="text-sm text-slate-400">Add title, amount, set status and set the price of new product!</p>
+        <p className="text-sm text-slate-400">Add name of new category!</p>
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -68,45 +62,7 @@ const CreatePage = () => {
                             <FormControl>
                                 <Input
                                     disabled={isSubmitting}
-                                    placeholder="e.g. 'Eggs'"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField 
-                    control={form.control}
-                    name="category_id"
-                    render={({field}) => (
-                        <FormItem>
-                           <FormLabel>
-                                Product amount 
-                            </FormLabel> 
-                            <FormControl>
-                                <Input
-                                    type="number"
-                                    disabled={isSubmitting}
-                                    placeholder="e.g. 1"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField 
-                    control={form.control}
-                    name="characteristics"
-                    render={({field}) => (
-                        <FormItem>
-                           <FormLabel>
-                                Product characteristics
-                            </FormLabel> 
-                            <FormControl>
-                                <Input
-                                    disabled={isSubmitting}
+                                    placeholder="e.g. 'Fruits'"
                                     {...field}
                                 />
                             </FormControl>
@@ -115,7 +71,7 @@ const CreatePage = () => {
                     )}
                 />
                 <div className="flex items-center gap-x-2">
-                    <Link href="/products">
+                    <Link href="/category">
                         <Button
                             type="button"
                             variant="ghost"

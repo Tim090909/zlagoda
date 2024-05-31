@@ -45,7 +45,7 @@ export default function Home() {
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <Layers3 className="w-20 h-20 text-slate-300"/>
-            <Link href="categories"><Button variant="outline" className="text-slate-200">Manage categories</Button></Link>
+            <Link href="category"><Button variant="outline" className="text-slate-200">Manage categories</Button></Link>
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <Users className="w-20 h-20 text-slate-300"/>

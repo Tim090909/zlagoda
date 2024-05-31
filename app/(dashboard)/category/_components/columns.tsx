@@ -14,15 +14,13 @@ import { Checkbox } from "@/components/ui/checkbox"
 //import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-export type Product = {
+export type Category = {
   id: string
   title: string
-  category: string
-  characteristics: string
 }
 
 
-export const columns: ColumnDef<Product>[] = [{
+export const columns: ColumnDef<Category>[] = [{
   id: "select",
   header: ({ table }) => (
     <Checkbox
@@ -67,35 +65,6 @@ export const columns: ColumnDef<Product>[] = [{
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  {
-    accessorKey: "category",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Category
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  
-  {
-    accessorKey: "characteristics",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Characteristics
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
