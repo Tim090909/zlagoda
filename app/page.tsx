@@ -33,15 +33,15 @@ export default function Home() {
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <Store className="w-20 h-20 text-slate-300"/>
-            <Link href="products_in_shop"><Button variant="outline" className="text-slate-200">Manage products in shop</Button></Link>
+            <Link href="store_product"><Button variant="outline" className="text-slate-200">Manage products in shop</Button></Link>
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <ReceiptText className="w-20 h-20 text-slate-300"/>
-            <Link href="checks"><Button variant="outline" className="text-slate-200">Manage checks</Button></Link>
+            <Link href="check"><Button variant="outline" className="text-slate-200">Manage checks</Button></Link>
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <BookUser className="w-20 h-20 text-slate-300"/>
-            <Link href="clients"><Button variant="outline" className="text-slate-200">Manage clients</Button></Link>
+            <Link href="customer"><Button variant="outline" className="text-slate-200">Manage clients</Button></Link>
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <Layers3 className="w-20 h-20 text-slate-300"/>
