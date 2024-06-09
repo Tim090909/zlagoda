@@ -1,12 +1,11 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { UseFormSetValue } from 'react-hook-form';
-import { StoreProduct } from '../app/(dashboard)/(add)/add_check/_components/columns';
+import { StoreProduct } from '../app/(dashboard)/(add)/add_check/_components/form';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-
 
 export const handleAddProduct = (
   product: StoreProduct,
