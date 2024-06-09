@@ -1,7 +1,7 @@
 import { sql } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { hashPassword } from '@/lib/hash';
-import generateUniqueEmployeeId from "@/lib/id_generator";
+import { generateUniqueEmployeeId } from "@/lib/id_generator";
 
 export async function POST(req: Request) {
     try{
