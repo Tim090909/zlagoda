@@ -21,7 +21,7 @@ export type CartProduct = {
   amount: number;
 }
 import { handleAddProduct } from '@/lib/utils';
-/*
+
 interface CheckColumnsProps {
   handleQuantityChange: (upc: string, newAmount: number) => void;
   handleDeleteProduct: (upc: string) => void;
@@ -99,4 +99,4 @@ export const columns = ({ handleQuantityChange, handleDeleteProduct }: CheckColu
 
 
  
-]*/
+]

@@ -1,5 +1,5 @@
 "use client"
-/*
+
 import Link from "next/link";
 import * as z from "zod";
 import axios from "axios";
@@ -16,7 +16,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { useCallback, useMemo, useState } from "react";
 import { DataTable } from "./data-table";
-import { columns } from "./columns";
+//import { columns } from "./columns";
 
 interface Customer {
     id: string;
@@ -43,7 +43,7 @@ const formSchema = z.object({
     products: z.object({upc: z.string(), title: z.string(), amount: z.number(), price: z.number()}).array(),
 })
 
-const AddForm = ({customers, products}: AddFormProps ) => {
+const AddForm = ({customers, products}: AddFormProps ) => {/*
     const [prodList, setProdList] = useState<StoreProduct[]>(products);
     const router = useRouter();
     const [selectedProducts, setSelectedProducts] = useState<{ upc: string, title: string, amount: number, price: number }[]>([]);
@@ -244,7 +244,7 @@ const AddForm = ({customers, products}: AddFormProps ) => {
         </div>
       </div>
     </div>
-  )
+  )*/
 }
 
-export default AddForm;*/
+export default AddForm;
