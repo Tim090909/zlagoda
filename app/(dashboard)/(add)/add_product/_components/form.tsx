@@ -21,7 +21,7 @@ const formSchema = z.object({
         message: "Title is required"
     }),
     category_id: z.coerce.number(),
-    characteristics: z.string().min(10, {
+    characteristics: z.string().min(2, {
         message: "Characteristics is required"
     })
 })

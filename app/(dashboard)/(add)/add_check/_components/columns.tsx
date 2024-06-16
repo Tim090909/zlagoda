@@ -83,15 +83,12 @@ export const columns = ({ handleQuantityChange, handleDeleteProduct }: CheckColu
     ),
     cell: ({ row }) => (
         <div className="flex items-center">
-            
             <input
                 type="number"
                 value={row.original.amount}
                 onChange={e => handleQuantityChange(row.original.upc, parseInt(e.target.value))}
                 className="w-12 text-center"
-            />
-            
-            
+            /> 
         </div>
     ),
   },

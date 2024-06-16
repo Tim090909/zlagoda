@@ -68,7 +68,6 @@ const AddForm = ({customers, products}: AddFormProps ) => {
         form.setValue("products", updatedProducts);
         const updatedProdList = prodList.filter(p => p.upc !== product.upc);
         setProdList(updatedProdList);
-        //console.log(updatedProducts);
     };
 
     const handleQuantityChange = useCallback((upc: string, newAmount: number) => {
@@ -99,7 +98,7 @@ const AddForm = ({customers, products}: AddFormProps ) => {
         }
     }
 
-    const cols = useMemo(() => columns({handleQuantityChange, handleDeleteProduct}), [handleQuantityChange, handleDeleteProduct])
+    const cols = useMemo(() => columns({handleQuantityChange, handleDeleteProduct}), [])
   return (
     <div className=" max-w-5xl mx-auto flex md:items-top md:justify-center gap-8 h-full p-6 ">
       <div className="w-[678px] min-h-96 border-2 rounded-xl py-4 px-6">
