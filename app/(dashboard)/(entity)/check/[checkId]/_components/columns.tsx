@@ -14,7 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 //import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-export type CartProduct = {
+export type CheckProduct = {
   upc: string;
   title: string;
   price: number;
@@ -29,7 +29,7 @@ interface CheckColumnsProps {
 
 
 
-export const columns = ({ handleQuantityChange, handleDeleteProduct }: CheckColumnsProps): ColumnDef<CartProduct>[] => [
+export const columns: ColumnDef<CheckProduct>[] = [
   {
     accessorKey: "upc",
     header: ({ column }) => {
@@ -80,26 +80,8 @@ export const columns = ({ handleQuantityChange, handleDeleteProduct }: CheckColu
     accessorKey: 'amount',
     header: ({ column }) => (
         <p>Amount</p>
-    ),
-    cell: ({ row }) => (
-        <div className="flex items-center">
-            
-            <input
-                type="number"
-                value={row.original.amount}
-                onChange={e => handleQuantityChange(row.original.upc, parseInt(e.target.value))}
-                className="w-12 text-center"
-            />
-            
-            
-        </div>
-    ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => (<Button variant="ghost" onClick={() => handleDeleteProduct(row.original.upc)}><Trash className="w-4 h-4"/></Button>)
+    )
   }
-
 
  
 ]

@@ -25,27 +25,16 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { cn } from "@/lib/utils"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  categories: Category[];
-}
-
-interface Category {
-  id: number;
-  title: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  categories
-}: DataTableProps<TData, TValue>,) {
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
@@ -65,67 +54,16 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
+    <div className="mt-10">
       <div className="flex items-center py-4 justify-between">
         <Input
-          placeholder="Filter product..."
+          placeholder="Find product..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm mr-2"
         />
-        <Popover>
-            <PopoverTrigger asChild>
-              {/*
-                <Button
-                variant="outline"
-                role="combobox"
-                className={cn(
-                    "w-[200px] justify-between ",
-                    !field.value && "text-muted-foreground"
-                )}
-                >
-                {field.value
-                    ? categories.find(
-                        (category) => category.id === field.value
-                    )?.title
-                    : "Select category"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>*/}
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-            <Command className="bg-white">
-                <CommandInput placeholder="Search category..." />
-                <CommandEmpty>No category found.</CommandEmpty>
-                <CommandGroup>
-                {categories.map((category) => (
-                    <CommandItem
-                    value={category.title}
-                    key={category.id}
-                    onSelect={() => {
-                        /*form.setValue("category_id", category.id)*/
-                    }}
-                    >
-                    <Check
-                        className={cn(
-                        "mr-2 h-4 w-4",
-                        
-                        )}
-                    />
-                    {"(" + category.id + ") " + category.title}
-                    </CommandItem>
-                ))}
-                </CommandGroup>
-            </Command>
-            </PopoverContent>
-        </Popover>
-        <Link href="/add_product">
-          <Button>
-            <PlusCircle className="h-4 w-4 mr-2"/>
-            New product
-          </Button>
-        </Link>
       </div>
       <div className="rounded-md border">
         <Table>
