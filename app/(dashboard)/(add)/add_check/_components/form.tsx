@@ -68,17 +68,21 @@ const AddForm = ({customers, products}: AddFormProps ) => {
         form.setValue("products", updatedProducts);
         const updatedProdList = prodList.filter(p => p.upc !== product.upc);
         setProdList(updatedProdList);
+        console.log("handleAddProduct")
     };
 
     const handleQuantityChange = useCallback((upc: string, newAmount: number) => {
+      console.log(upc);
       const updatedProducts = selectedProducts.map(product =>
           product.upc === upc ? { ...product, amount: newAmount } : product
       );
       setSelectedProducts(updatedProducts);
       form.setValue('products', updatedProducts);
-  }, []);
+      console.log("handleQuantityChange")
+  }, [selectedProducts, form]);
 
   const handleDeleteProduct = useCallback((upc: string) => {
+      console.log(upc);
       const updatedProducts = selectedProducts.filter(product => product.upc !== upc);
       setSelectedProducts(updatedProducts);
       form.setValue('products', updatedProducts);
@@ -86,7 +90,8 @@ const AddForm = ({customers, products}: AddFormProps ) => {
       if (restoredProduct) {
           setProdList([...prodList, restoredProduct]);
       }
-  }, []);
+      console.log("handleDeleteProduct")
+  }, [selectedProducts, products, form]);
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
@@ -98,7 +103,7 @@ const AddForm = ({customers, products}: AddFormProps ) => {
         }
     }
 
-    const cols = useMemo(() => columns({handleQuantityChange, handleDeleteProduct}), [])
+    const cols = useMemo(() => columns({handleQuantityChange, handleDeleteProduct}), [handleQuantityChange, handleDeleteProduct])
   return (
     <div className=" max-w-5xl mx-auto flex md:items-top md:justify-center gap-8 h-full p-6 ">
       <div className="w-[678px] min-h-96 border-2 rounded-xl py-4 px-6">
