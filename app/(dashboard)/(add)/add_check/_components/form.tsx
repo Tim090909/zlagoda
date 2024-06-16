@@ -7,21 +7,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
-import { Form, FormControl, FormDescription, FormField, FormLabel, FormMessage, FormItem } from "@/components/ui/form";
+/*
+import { Form, FormControl, FormField, FormLabel, FormMessage, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { sql } from "@/lib/db";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { getProducts } from "@/actions/get_products";
+import { useCallback, useMemo, useState } from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
-//import { StoreProduct } from "./columns";
 
 interface Customer {
     id: string;
@@ -252,4 +247,4 @@ const AddForm = ({customers, products}: AddFormProps ) => {
   )
 }
 
-export default AddForm;
+export default AddForm;*/
