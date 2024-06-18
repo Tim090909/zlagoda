@@ -7,8 +7,17 @@ import {sql} from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getCategories } from '@/actions/get_categories';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { redirect } from 'next/navigation';
+
 export default async function Page() { 
-    
+  const session = await getServerSession(options);
+  const role = session?.user.role;
+  if(role !== "manager"){
+    redirect("/");
+  }
+
   const result = await sql`SELECT id_product, product_name, category_name, characteristics 
   FROM product inner join category on Product.category_number=Category.category_number;`;
 

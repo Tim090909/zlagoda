@@ -2,6 +2,8 @@
 
 import { Input } from '@/components/ui/input'
 import React from 'react'
+import {signIn} from "next-auth/react"
+
 
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,34 +14,55 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+//import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(1, {
+    message: "Enter your Username!",
   }),
-  password: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  password: z.string().min(1, {
+    message: "Enter your Password!",
   }),
 })
 
 
-const LoginPage = () => {
+
+const LoginForm = () => {
+    const router = useRouter();
+    //const route = useRouter();
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-          username: "",
+            username: '',
+            password: '',
         },
       })
     
-      function onSubmit(data: z.infer<typeof FormSchema>) {
-        
-      }
+      const onSubmit = async (data: z.infer<typeof FormSchema>) => {/*
+        const callbackUrl = Array.isArray(router.query.callbackUrl)
+      ? router.query.callbackUrl[0]
+      : router.query.callbackUrl;
+
+        const response = await signIn('credentials', {
+          username: data.username,
+          password: data.password,
+          redirect: false
+        });
+    
+        console.log({ response });*/
+    /*
+        if (!response?.error) {
+          router.push('/');
+          router.refresh();
+        }*/
+      };
+    
   return (
     <>
     <div className='bg-slate-800 h-screen w-screen flex justify-center items-center'>
@@ -83,4 +106,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default LoginForm

@@ -1,33 +1,20 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash } from "lucide-react"
-import Link from "next/link";
+import { ArrowUpDown, Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import { Checkbox } from "@/components/ui/checkbox"
-//import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
+
 export type CartProduct = {
   upc: string;
   title: string;
   price: number;
   amount: number;
 }
-import { handleAddProduct } from '@/lib/utils';
 
 interface CheckColumnsProps {
   handleQuantityChange: (upc: string, newAmount: number) => void;
   handleDeleteProduct: (upc: string) => void;
 }
-
-
 
 export const columns = ({ handleQuantityChange, handleDeleteProduct }: CheckColumnsProps): ColumnDef<CartProduct>[] => [
   {

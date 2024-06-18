@@ -6,9 +6,16 @@ import { Category, columns } from "./_components/columns";
 import {sql} from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { redirect } from 'next/navigation';
 
 export default async function Page() { 
-    
+  const session = await getServerSession(options);
+  const role = session?.user.role;
+  if(role !== "manager"){
+    redirect("/");
+  }
   const result = await sql`SELECT category_number, category_name FROM category;`;
 
   const categories_fdb: Category[] = result.map(row => ({

@@ -6,8 +6,16 @@ import { Employee, columns } from "./_components/columns";
 import {sql} from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { redirect } from 'next/navigation';
 
 export default async function Page() { 
+  const session = await getServerSession(options);
+  const role = session?.user.role;
+  if(role !== "manager"){
+    redirect("/");
+  }
     
   const result = await sql`SELECT Employee.id_employee, empl_surname, empl_name, empl_patronimic, empl_role, salary, date_of_birth, date_of_start, phone_number, city,street, zip_code, login
   FROM employee LEFT JOIN Passwords on Employee.id_employee=Passwords.id_employee;`;

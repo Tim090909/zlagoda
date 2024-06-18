@@ -6,8 +6,17 @@ import { StoreProduct, columns } from "./_components/columns";
 import {sql} from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { redirect } from 'next/navigation';
+
 export default async function Page() { 
-    
+  const session = await getServerSession(options);
+  const role = session?.user.role;
+  if(role !== "manager"){
+    redirect("/");
+  }
+
   const result = await sql`SELECT upc, upc_prom, product.id_product, product_name, selling_price, products_number, promotional_product 
   FROM store_product INNER JOIN product on Product.id_product=Store_product.id_product;`;
   //console.log(result);
