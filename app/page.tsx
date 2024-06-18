@@ -1,8 +1,7 @@
-import { createProductsTable } from "@/actions/create_products_table";
+
 import { Button } from "@/components/ui/button";
 import { BookUser, Layers3, LogOut, ReceiptText, ShoppingCart, Store, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import Image from "next/image";
 import Link from "next/link";
 import Logout from "./logout";
 import { getServerSession } from "next-auth";
@@ -12,6 +11,7 @@ export default async function Home() {
   const session = await getServerSession(options);
   const role = session?.user.role;
   //console.log(session?.user);
+  
   return (
     <div className="bg-zinc-950">
       <header className="flex justify-end items-center py-4 px-4 gap-8">

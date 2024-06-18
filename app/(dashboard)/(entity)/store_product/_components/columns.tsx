@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 //import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { DataTableRowActions } from "./rowActions";
 export type StoreProduct = {
   id: number;
   title: string;
@@ -142,17 +143,10 @@ export const columns: ColumnDef<StoreProduct>[] = [{
   {
     id: "actions",
     cell: ({ row }) => {
-      const { id } = row.original;
+      const id  = row.getValue("id");
 
       return (
-        
-            <Link href={`/teacher/articles/${id}`}>
-          
-                <Pencil className="h-4 w-4 mr-2" />
-                Edit
-          
-            </Link>
-      
+        <DataTableRowActions row={row}/>
       )
     }
   }

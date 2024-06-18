@@ -19,6 +19,7 @@ const formSchema = z.object({
 })
 
 const AddCategoryForm = () => {
+   
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
