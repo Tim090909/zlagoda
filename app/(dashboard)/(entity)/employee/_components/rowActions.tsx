@@ -53,6 +53,10 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
                 <Trash className="h-3 w-3 text-slate-600 mr-2"/> Delete 
             </Button>
         </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button variant="ghost"><Link href={`/custom_requests/nazar1/${employee.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Get stat  </Link>
+          </Button>
+          </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

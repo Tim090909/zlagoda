@@ -92,6 +92,7 @@ const AddForm = ({customers, products}: AddFormProps ) => {
         try{
             const response = await axios.post("/api/check", values);
             router.push(`/check`);
+            router.refresh();
             toast.success("Check created");
         } catch{
             toast.error("Something went wrong");
