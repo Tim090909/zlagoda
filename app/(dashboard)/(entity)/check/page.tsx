@@ -6,6 +6,8 @@ import { Check, columns } from "./_components/columns";
 import {sql} from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 export default async function Page() { 
     
   const result = await sql`SELECT check_number, id_employee, card_number, print_date, sum_total, vat
