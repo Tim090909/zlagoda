@@ -1,4 +1,4 @@
-"use server";
+//"use server";
 import React from 'react'
 import { DataTable } from './_components/data-table'
 import { Customer, columns } from "./_components/columns";
