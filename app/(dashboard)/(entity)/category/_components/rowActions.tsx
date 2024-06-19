@@ -43,7 +43,7 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-24 bg-white">
+      <DropdownMenuContent align="end" className="w-42 bg-white">
         <DropdownMenuItem>
           <Button variant="ghost"><Link href={`/category/${category.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
           </Button>
@@ -53,6 +53,10 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
                 <Trash className="h-3 w-3 text-slate-600 mr-2"/> Delete 
             </Button>
         </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button variant="ghost"><Link href={`/custom_requests/tymofii2/${category.id}`} className="flex flex-row items-center">Standing cashiers</Link>
+          </Button>
+          </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

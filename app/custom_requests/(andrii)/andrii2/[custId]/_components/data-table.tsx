@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import Link from "next/link"
-import { AreaChart, PlusCircle } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 
 import {
   Table,
@@ -55,28 +55,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
-        <Input
-          placeholder="Filter customers..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm mr-2"
-        />
-        <Link href="/custom_requests/andrii1">
-          <Button className="bg-slate-400">
-            <AreaChart className="h-4 w-4 mr-2"/>
-            Customers statistics
-          </Button>
-        </Link>
-        <Link href="/add_customer">
-          <Button>
-            <PlusCircle className="h-4 w-4 mr-2"/>
-            New customer
-          </Button>
-        </Link>
-      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

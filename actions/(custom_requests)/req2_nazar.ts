@@ -1,21 +1,23 @@
 import { sql } from '@/lib/db';
 
-export const getUserPass = async (id: string) => {
+export const req2Nazar = async () => {
   try {
     const result = await sql
-                `SELECT Employee.id_employee, Employee.empl_surname, Employee.empl_name, Employee.empl_role, 
-                Sum(Checks.vat) AS total_taxes, Count(UPC) AS total_prod
-                FROM Employee LEFT JOIN (Checks LEFT JOIN Sale ON Checks.check_number = Sale.check_number) 
-                ON Employee.id_employee = Checks.id_employee 
-                Where Employee.id_employee=${id}
-                GROUP BY Employee.id_employee, Employee.empl_surname, Employee.empl_name, Employee.empl_role`;
+                `SELECT Product.*
+FROM Product
+WHERE Product.id_product NOT IN (
+    SELECT DISTINCT Store_Product.id_product
+    FROM Store_Product
+    WHERE Store_Product.id_product NOT IN ( 
+        SELECT Store_Product.id_product
+        FROM Store_Product
+        WHERE Store_Product.UPC IN(
+            SELECT Sale.UPC
+            FROM Sale)));`;
     return result.map((row: any) => ({
-      emplId: row.id_employee,
-      emplName: row.empl_name,
-      emplSurname: row.empl_surname,
-      emplRole: row.empl_role,
-      totalTaxes: row.total_taxes,
-      totalProducts: row.total_prod
+      id: row.id_product,
+      title: row.product_name,
+      characteristics: row.characteristics
     }));
   } catch (error) {
     console.error('Error Request 1 Nazar:', error);

@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import Link from "next/link"
-import { PlusCircle } from "lucide-react"
+import { AreaChart, PlusCircle } from "lucide-react"
 
 import {
   Table,
@@ -64,6 +64,12 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm mr-2"
         />
+        <Link href="/custom_requests/tymofii1">
+          <Button className="bg-slate-400">
+            <AreaChart className="h-4 w-4 mr-2"/>
+            Full employees stat
+          </Button>
+        </Link>
         <Link href="/add_employee">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2"/>

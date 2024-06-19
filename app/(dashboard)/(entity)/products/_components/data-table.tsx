@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import Link from "next/link"
-import { PlusCircle } from "lucide-react"
+import { Info, PlusCircle } from "lucide-react"
 
 import {
   Table,
@@ -120,6 +120,12 @@ export function DataTable<TData, TValue>({
             </Command>
             </PopoverContent>
         </Popover>
+        <Link href="/custom_requests/nazar2">
+          <Button className="bg-slate-400">
+            <Info className="h-4 w-4 mr-2"/>
+            Nazar 2
+          </Button>
+        </Link>
         <Link href="/add_product">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2"/>

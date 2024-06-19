@@ -13,7 +13,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import Link from "next/link"
-import { AreaChart, PlusCircle } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 
 import {
   Table,
@@ -25,16 +25,21 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { cn } from "@/lib/utils"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
+
 export function DataTable<TData, TValue>({
   columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+  data
+}: DataTableProps<TData, TValue>,) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
@@ -55,28 +60,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
-        <Input
-          placeholder="Filter customers..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm mr-2"
-        />
-        <Link href="/custom_requests/andrii1">
-          <Button className="bg-slate-400">
-            <AreaChart className="h-4 w-4 mr-2"/>
-            Customers statistics
-          </Button>
-        </Link>
-        <Link href="/add_customer">
-          <Button>
-            <PlusCircle className="h-4 w-4 mr-2"/>
-            New customer
-          </Button>
-        </Link>
-      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
