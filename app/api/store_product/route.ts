@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
     try{
         const {id, price, amount, promotional} = await req.json();
-        console.log(id, price, amount, promotional)
+        //console.log(id, price, amount, promotional)
 
         const upc = await generateUniqueUPC();
         const newProduct = await sql`INSERT INTO Store_product (upc, id_product, selling_price, products_number, promotional_product)

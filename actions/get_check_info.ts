@@ -4,7 +4,7 @@ export const getCheckInfo = async (id : string) => {
   try {
     const result = await sql`SELECT check_number, checks.id_employee, empl_surname, empl_name, customer_card.card_number, customer_card.phone_number, cust_surname, cust_name, print_date, sum_total, vat
     FROM (checks INNER JOIN employee ON checks.id_employee = employee.id_employee) 
-    INNER JOIN customer_card ON customer_card.card_number=checks.card_number
+    LEFT JOIN customer_card ON customer_card.card_number=checks.card_number
     WHERE checks.check_number=${id}
     `;
     return result.map((row: any) => ({

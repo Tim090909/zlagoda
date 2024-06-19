@@ -30,7 +30,7 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
             toast.error("Something went wrong");
         }
     }
-    const storeProduct = row.original as { id: string };;
+    const storeProduct = row.original as { upc: string };;
 
   return (
     <DropdownMenu>
@@ -45,11 +45,11 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-24 bg-white">
         <DropdownMenuItem>
-          <Button variant="ghost"><Link href={`/check/${storeProduct.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
+          <Button variant="ghost"><Link href={`/store_product/${storeProduct.upc}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
           </Button>
           </DropdownMenuItem>
         <DropdownMenuItem>
-            <Button variant="ghost" onClick={() => handleDeleteStoreProd(storeProduct.id)}>
+            <Button variant="ghost" onClick={() => handleDeleteStoreProd(storeProduct.upc)}>
                 <Trash className="h-3 w-3 text-slate-600 mr-2"/> Delete 
             </Button>
         </DropdownMenuItem>

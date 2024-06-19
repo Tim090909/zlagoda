@@ -20,3 +20,21 @@ export async function DELETE(req: Request,
         return new NextResponse("Internal Error", {status: 500});
     }
 }
+
+
+export async function PATCH(req: Request,
+    { params }: { params: { productId: string } }) {
+    try{
+        const {title,
+            category_id,
+            characteristics} = await req.json();
+        await sql`UPDATE product
+        SET category_number=${category_id}, product_name=${title}, characteristics=${characteristics} 
+        WHERE id_product=${params.productId};`;
+        return NextResponse.json(200);
+
+    }catch(error){
+        console.log("[product_UPDATE]", error);
+        return new NextResponse("Internal Error", {status: 500});
+    }
+}

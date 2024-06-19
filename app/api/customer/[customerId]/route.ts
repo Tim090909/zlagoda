@@ -18,3 +18,33 @@ export async function DELETE(req: Request,
         return new NextResponse("Internal Error", {status: 500});
     }
 }
+
+export async function PATCH(req: Request,
+    { params }: { params: { customerId: string } }) {
+    try{
+        const {name,
+            surname,
+            patronimic,
+            percent,
+            phone,
+            city,
+            street,
+            zip_code} = await req.json();
+        await sql`UPDATE customer_card 
+            SET cust_name = ${name},               
+                cust_surname = ${surname},
+                cust_patronymic = ${patronimic},
+                percent = ${percent},
+                phone_number = ${phone},
+                city = ${city},                
+                street = ${street},
+                zip_code = ${zip_code} 
+            WHERE card_number=${params.customerId}; 
+      `
+        return NextResponse.json(200);
+
+    }catch(error){
+        console.log("[customer_UPDATE]", error);
+        return new NextResponse("Internal Error", {status: 500});
+    }
+}

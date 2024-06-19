@@ -45,7 +45,7 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-24 bg-white">
         <DropdownMenuItem>
-          <Button variant="ghost"><Link href={`/check/${customer.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
+          <Button variant="ghost"><Link href={`/customer/${customer.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
           </Button>
           </DropdownMenuItem>
         <DropdownMenuItem>

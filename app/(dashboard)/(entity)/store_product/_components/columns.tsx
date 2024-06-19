@@ -143,8 +143,6 @@ export const columns: ColumnDef<StoreProduct>[] = [{
   {
     id: "actions",
     cell: ({ row }) => {
-      const id  = row.getValue("id");
-
       return (
         <DataTableRowActions row={row}/>
       )

@@ -7,55 +7,63 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 
 import { Form, FormControl, FormDescription, FormField, FormLabel, FormMessage, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { sql } from "@/lib/db";
-import { useEffect, useState } from "react";
-import { getProducts } from "@/actions/get_products";
 
-interface Product {
+const formSchema = z.object({
+    title: z.string().min(1, {
+        message: "Title is required"
+    }),
+    category_id: z.coerce.number(),
+    characteristics: z.string().min(2, {
+        message: "Characteristics is required"
+    })
+})
+
+interface Category {
     id: number;
     title: string;
 }
 
-interface AddFormProps {
-    products: Product[];
+export type Product = {
+  id: number
+  title: string
+  categoryId: number 
+  characteristics: string
 }
 
-const formSchema = z.object({
-    id: z.coerce.number(),
-    price: z.coerce.number(),
-    amount: z.coerce.number(),
-    promotional: z.boolean().default(false).optional(),
-})
 
-const AddForm = ({products}: AddFormProps) => {
+interface FormProps {
+    categories: Category[];
+    product: Product;
+}
+
+const ProductForm = ({product, categories} : FormProps) => {
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            promotional: false,
+            title: product.title,
+            category_id: product.categoryId,
+            characteristics: product.characteristics
         },
     })
-
-    //console.log("hefbkhqwejvbfkhqwbjelkqbwejlhje")
-    //console.log(products);
 
     const { isSubmitting, isValid } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            const response = await axios.post("/api/store_product", values);
-            router.push(`/store_product`);
-            toast.success("Store product adeded");
+            const response = await axios.patch(`/api/products/${product.id}`, values);
+            router.push(`/products`);
+            router.refresh();
+            toast.success("Product edited");
         } catch{
             toast.error("Something went wrong");
         }
@@ -64,21 +72,42 @@ const AddForm = ({products}: AddFormProps) => {
     <div className=" max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 mt-16">
       <div>
         <h1 className="text-3xl font-semibold">
-            Add new store product
+            Edit product
         </h1>
-        <p className="text-sm text-slate-400">Add amount and price of new store product!</p>
+        <p className="text-sm text-slate-400">Edit title, category and characteristics of product!</p>
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 mt-8"
             >
-               <FormField
-                control={form.control}
-                name="id"
-                render={({ field }) => (
-                    <FormItem className="flex flex-col ">
-                    <FormLabel>Product</FormLabel>
-                    <Popover>
+                <FormField 
+                    control={form.control}
+                    name="title"
+                    render={({field}) => (
+                        <FormItem>
+                           <FormLabel>
+                                Product title 
+                            </FormLabel> 
+                            <FormControl>
+                                <Input
+                                    disabled={isSubmitting}
+                                    placeholder="e.g. 'Eggs'"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField 
+                    control={form.control}
+                    name="category_id"
+                    render={({field}) => (
+                        <FormItem className="flex flex-col gap-3">
+                           <FormLabel>
+                                Category
+                            </FormLabel> 
+                            <Popover>
                         <PopoverTrigger asChild>
                         <FormControl>
                             <Button
@@ -90,99 +119,59 @@ const AddForm = ({products}: AddFormProps) => {
                             )}
                             >
                             {field.value
-                                ? products.find(
-                                    (product) => product.id === field.value
+                                ? categories.find(
+                                    (category) => category.id === field.value
                                 )?.title
-                                : "Select product"}
+                                : "Select category"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                         </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-[200px] p-0">
                         <Command className="bg-white">
-                            <CommandInput placeholder="Search product..." />
-                            <CommandEmpty>No product found.</CommandEmpty>
+                            <CommandInput placeholder="Search category..." />
+                            <CommandEmpty>No category found.</CommandEmpty>
                             <CommandGroup>
-                            {products.map((product) => (
+                            {categories.map((category) => (
                                 <CommandItem
-                                value={product.title}
-                                key={product.id}
+                                value={category.title}
+                                key={category.id}
                                 onSelect={() => {
-                                    form.setValue("id", product.id)
+                                    form.setValue("category_id", category.id)
                                 }}
                                 >
                                 <Check
                                     className={cn(
                                     "mr-2 h-4 w-4",
-                                    product.id === field.value
+                                    category.id === field.value
                                         ? "opacity-100"
                                         : "opacity-0"
                                     )}
                                 />
-                                {product.title}
+                                {"(" + category.id + ") " + category.title}
                                 </CommandItem>
                             ))}
                             </CommandGroup>
                         </Command>
                         </PopoverContent>
                     </Popover>
-                    <FormMessage />
-                    </FormItem>
-                )}
-                />
-                <FormField 
-                    control={form.control}
-                    name="price"
-                    render={({field}) => (
-                        <FormItem>
-                           <FormLabel>
-                                Product price 
-                            </FormLabel> 
-                            <FormControl>
-                                <Input
-                                    type="number"
-                                    disabled={isSubmitting}
-                                    placeholder="e.g. 100"
-                                    {...field}
-                                />
-                            </FormControl>
+                           
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <FormField 
                     control={form.control}
-                    name="amount"
+                    name="characteristics"
                     render={({field}) => (
                         <FormItem>
                            <FormLabel>
-                           Product amount
+                                Product characteristics
                             </FormLabel> 
                             <FormControl>
                                 <Input
-                                    type="number"
                                     disabled={isSubmitting}
-                                    placeholder="e.g. 100"
                                     {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField 
-                    control={form.control}
-                    name="promotional"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>
-                                Is promotional? 
-                            </FormLabel> 
-                            <FormControl>
-                                <Checkbox
-                                className="ml-4"
-                                    checked={field.value}
-                                    onCheckedChange={(checked) => field.onChange(checked)}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -202,7 +191,7 @@ const AddForm = ({products}: AddFormProps) => {
                         type="submit"
                         disabled={!isValid || isSubmitting}
                     >
-                        Continue
+                        Save
                     </Button>
                 </div>
             </form>
@@ -212,4 +201,4 @@ const AddForm = ({products}: AddFormProps) => {
   )
 }
 
-export default AddForm;
+export default ProductForm

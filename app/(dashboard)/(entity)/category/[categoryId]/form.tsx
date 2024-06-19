@@ -18,14 +18,23 @@ const formSchema = z.object({
     })
 })
 
-const AddCategoryForm = () => {
+interface Category {
+    id: number;
+    title: string;
+}
+
+interface CategoryProps {
+    category: Category;
+}
+
+const CategoryForm = ({ category }: CategoryProps) => {
    
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: ""
+            title: category.title,
         },
     })
 
@@ -33,9 +42,10 @@ const AddCategoryForm = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            const response = await axios.post("/api/category", values);
+            const response = await axios.patch(`/api/category/${category.id}`, values);
             router.push(`/category`);
-            toast.success("Category adeded");
+            router.refresh();
+            toast.success("Category edited");
         } catch{
             toast.error("Something went wrong");
         }
@@ -44,9 +54,9 @@ const AddCategoryForm = () => {
     <div className=" max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6 mt-16">
       <div>
         <h1 className="text-3xl font-semibold">
-            Add new category
+            Edit category
         </h1>
-        <p className="text-sm text-slate-400">Add name of new category!</p>
+        <p className="text-sm text-slate-400">Change name of the category!</p>
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -94,4 +104,4 @@ const AddCategoryForm = () => {
   )
 }
 
-export default AddCategoryForm
+export default CategoryForm

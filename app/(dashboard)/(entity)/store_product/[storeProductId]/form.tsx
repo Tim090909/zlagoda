@@ -25,8 +25,17 @@ interface Product {
     title: string;
 }
 
-interface AddFormProps {
+interface StoreProduct{
+    upc: string;
+    amount: number;
+    price: number;
+    productId: number;
+    promotional: boolean;
+}
+
+interface FormProps {
     products: Product[];
+    storeProduct: StoreProduct;
 }
 
 const formSchema = z.object({
@@ -36,24 +45,24 @@ const formSchema = z.object({
     promotional: z.boolean().default(false).optional(),
 })
 
-const AddForm = ({products}: AddFormProps) => {
+const StoreProductForm = ({products, storeProduct}: FormProps) => {
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            promotional: false,
+            id: storeProduct.productId,
+            amount: storeProduct.amount,
+            price: storeProduct.price,
+            promotional: storeProduct.promotional || false,
         },
     })
-
-    //console.log("hefbkhqwejvbfkhqwbjelkqbwejlhje")
-    //console.log(products);
 
     const { isSubmitting, isValid } = form.formState;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try{
-            const response = await axios.post("/api/store_product", values);
+            const response = await axios.patch(`/api/store_product/${storeProduct.upc}`, values);
             router.push(`/store_product`);
             toast.success("Store product adeded");
         } catch{
@@ -212,4 +221,4 @@ const AddForm = ({products}: AddFormProps) => {
   )
 }
 
-export default AddForm;
+export default StoreProductForm;
