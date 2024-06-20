@@ -11,7 +11,7 @@ const NazarRequests = async () => {
       <div className='max-w-[800px]'>
         <div className='mb-8'>
           <h2 className='text-xl font-semibold'>Request 2 Nazar</h2>
-          <p>Вивести інформацію про усі товари (навіть ті, яких нема в магазині) окрім тих, які не продаються.</p>
+          <p>Вивести інформацію про усі товари, що хоч раз були в наявності в магазині, (навіть ті, яких наразі нема в магазині) окрім тих, які жодного разу не продалися.</p>
         </div>
         <DataTable columns={columns} data={req2}/>
       </div>
