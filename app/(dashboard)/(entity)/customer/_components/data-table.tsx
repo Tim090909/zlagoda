@@ -62,10 +62,18 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4 justify-between print:hidden">
         <Input
-          placeholder="Filter customers..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter customers by surname"
+          value={(table.getColumn("surname")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            table.getColumn("surname")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm mr-2"
+        />
+        <Input
+          placeholder="Filter customers by percent"
+          value={(table.getColumn("percent")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("percent")?.setFilterValue(event.target.value)
           }
           className="max-w-sm mr-2"
         />

@@ -21,19 +21,27 @@ export async function POST(req: Request) {
         const custId = client_id || null;
         const currentDate = new Date().toISOString().slice(0, 19).replace('T', ' ');
         const checkId = await generateUniqueCheckId();
-        const newProduct = await sql`INSERT INTO Checks (check_number, id_employee, card_number, print_date, sum_total)
+        const newCheck = await sql`INSERT INTO Checks (check_number, id_employee, card_number, print_date, sum_total)
         VALUES ( ${checkId}, ${emplId}, ${custId}, ${currentDate}, ${sumTotal})
       `
 
         const insertPromises = products.map((product: Product) => 
             sql`
             INSERT INTO Sale ( upc, check_number, product_number, selling_price)
-            VALUES ( ${product.upc}, ${checkId}, ${product.amount}, ${product.price});
-            `
+            VALUES ( ${product.upc}, ${checkId}, ${product.amount}, ${product.price});`
         );
+
         await Promise.all(insertPromises);
 
-        return NextResponse.json(newProduct);
+        const updatePromises = products.map((product: Product) =>  sql`update store_product
+        set products_number=products_number-${product.amount}
+        where upc=${product.upc};`);
+
+        await Promise.all(updatePromises);
+        
+        //const deleteZero = await sql`delete from store_product where products_number=0;`
+
+        return NextResponse.json(200);
 
     }catch(error){
         console.log("[CHECK]", error);

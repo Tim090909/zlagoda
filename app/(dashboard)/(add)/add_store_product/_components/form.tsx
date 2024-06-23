@@ -55,6 +55,7 @@ const AddForm = ({products}: AddFormProps) => {
         try{
             const response = await axios.post("/api/store_product", values);
             router.push(`/store_product`);
+            router.refresh();
             toast.success("Store product adeded");
         } catch{
             toast.error("Something went wrong");
