@@ -15,20 +15,36 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { DataTableRowActions } from "./rowActions";
-export type Customer = {
-  id: string,
-  name: string,
-  surname: string,
-  patronimic: string,
-  percent: number,
-  phone: string,
-  city: string,
-  street: string,
-  zip_code: string
+export type Product = {
+  id: string
+  title: string
+  category: string
+  characteristics: string
 }
 
 
-export const columns: ColumnDef<Customer>[] = [
+export const columns: ColumnDef<Product>[] = [{
+  id: "select",
+  header: ({ table }) => (
+    <Checkbox
+      checked={
+        table.getIsAllPageRowsSelected() ||
+        (table.getIsSomePageRowsSelected() && "indeterminate")
+      }
+      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+      aria-label="Select all"
+    />
+  ),
+  cell: ({ row }) => (
+    <Checkbox
+      checked={row.getIsSelected()}
+      onCheckedChange={(value) => row.toggleSelected(!!value)}
+      aria-label="Select row"
+    />
+  ),
+  enableSorting: false,
+  enableHiding: false,
+},
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -44,86 +60,46 @@ export const columns: ColumnDef<Customer>[] = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
   },
   {
-    accessorKey: "surname",
+    accessorKey: "category",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Surname
+          Category
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
   },
+  
   {
-    accessorKey: "patronimic",
+    accessorKey: "characteristics",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Patronimic
+          Characteristics
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-  },
-  {
-    accessorKey: "percent",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Percent
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      return <span>{row.getValue("percent")}%</span>;
-    }
-  },
-  {
-    accessorKey: "phone",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Phone
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      const id  = row.getValue("id");
-
-      return (
-        <></>
-      )
-    }
   }
 ]

@@ -52,9 +52,15 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   })
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
     <div>
+      <div>
+      <Button onClick={handlePrint} className="bg-slate-400 mb-4 print:hidden">Print report</Button>
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

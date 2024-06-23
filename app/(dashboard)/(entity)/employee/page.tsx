@@ -38,8 +38,9 @@ export default async function Page() {
 
 
   return (
-    <div className='p-6 w-full mx-2 lg:mx-8'>
-      <div className='w-full my-4 flex justify-end'>
+    <div className='p-6 w-full 2xl:w-[1400px] mx-auto '>
+      <h2 className='hidden print:block text-2xl font-semibold my-8'>Employee report</h2>
+      <div className='w-full my-4 flex justify-end print:hidden'>
         <Button className='bg-slate-700 text-slate-200'><Link href="/">Back</Link></Button>
       </div>
       <DataTable columns={columns} data={employee_fdb} />

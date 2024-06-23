@@ -6,9 +6,12 @@ import { Customer, columns } from "./_components/columns";
 import {sql} from '@/lib/db';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { options } from '@/app/api/auth/[...nextauth]/options';
+import { getServerSession } from 'next-auth';
 
-export const dynamic = 'force-dynamic';
 export default async function Page() { 
+  const session = await getServerSession(options);
+  const role = session?.user.role || "";
     
   const result = await sql`SELECT card_number, cust_surname, cust_name, cust_patronymic, phone_number, city, street, zip_code, percent
   FROM Customer_Card;`;
@@ -27,11 +30,12 @@ export default async function Page() {
 
 
   return (
-    <div className='p-6 w-full mx-2 lg:mx-8'>
-      <div className='w-full my-4 flex justify-end'>
+    <div className='p-6 w-full xl:w-[1280px] mx-auto '>
+      <h2 className='hidden print:block text-2xl font-semibold my-8'>Customers report</h2>
+      <div className='w-full my-4 flex justify-end print:hidden'>
         <Button className='bg-slate-700 text-slate-200'><Link href="/">Back</Link></Button>
       </div>
-      <DataTable columns={columns} data={customer_fdb} />
+      <DataTable columns={columns} data={customer_fdb} role={role}/>
     </div>
   )
 }

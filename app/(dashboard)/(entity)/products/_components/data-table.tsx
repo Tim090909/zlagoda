@@ -8,7 +8,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
@@ -25,15 +24,12 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { cn } from "@/lib/utils"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   categories: Category[];
+  role: string;
 }
 
 interface Category {
@@ -44,16 +40,25 @@ interface Category {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  categories
+  categories,
+  role
 }: DataTableProps<TData, TValue>,) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
+  const filterColumns = <TData, TValue>(columns: ColumnDef<TData, TValue>[], role: string): ColumnDef<TData, TValue>[] => {
+    if (role == "cashier") {
+      return columns.slice(0, -1);
+    }
+    return columns;
+  };
+
+  const filteredColumns = filterColumns(columns, role);
+
   const table = useReactTable({
     data,
-    columns,
+    columns: filteredColumns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -64,9 +69,13 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
+      <div className="flex items-center py-4 justify-between print:hidden">
         <Input
           placeholder="Filter product..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -75,52 +84,8 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm mr-2"
         />
-        <Popover>
-            <PopoverTrigger asChild>
-              {/*
-                <Button
-                variant="outline"
-                role="combobox"
-                className={cn(
-                    "w-[200px] justify-between ",
-                    !field.value && "text-muted-foreground"
-                )}
-                >
-                {field.value
-                    ? categories.find(
-                        (category) => category.id === field.value
-                    )?.title
-                    : "Select category"}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>*/}
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-            <Command className="bg-white">
-                <CommandInput placeholder="Search category..." />
-                <CommandEmpty>No category found.</CommandEmpty>
-                <CommandGroup>
-                {categories.map((category) => (
-                    <CommandItem
-                    value={category.title}
-                    key={category.id}
-                    onSelect={() => {
-                        /*form.setValue("category_id", category.id)*/
-                    }}
-                    >
-                    <Check
-                        className={cn(
-                        "mr-2 h-4 w-4",
-                        
-                        )}
-                    />
-                    {"(" + category.id + ") " + category.title}
-                    </CommandItem>
-                ))}
-                </CommandGroup>
-            </Command>
-            </PopoverContent>
-        </Popover>
-        <Link href="/custom_requests/nazar2">
+        {role !== "cashier" && (<>
+          <Link href="/custom_requests/nazar2">
           <Button className="bg-slate-400">
             <Info className="h-4 w-4 mr-2"/>
             Nazar 2
@@ -132,6 +97,9 @@ export function DataTable<TData, TValue>({
             New product
           </Button>
         </Link>
+        <Button onClick={handlePrint} className="bg-slate-400">Print report</Button>
+        </>)}
+        
       </div>
       <div className="rounded-md border">
         <Table>
@@ -176,24 +144,6 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
       </div>
     </div>
   )

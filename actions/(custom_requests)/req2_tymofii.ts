@@ -4,8 +4,8 @@ export const req2Tymofii = async (id: number) => {
   try {
     const result = await sql
                 `SELECT id_employee, empl_surname, empl_name
-FROM Employee AS e
-WHERE NOT EXISTS (SELECT *
+                FROM Employee AS e
+                WHERE NOT EXISTS (SELECT *
                   FROM checks
                   WHERE id_employee = e.id_employee
                   AND NOT EXISTS (SELECT *
@@ -14,7 +14,7 @@ WHERE NOT EXISTS (SELECT *
                                   where ss.check_number=checks.check_number
                                   AND product.category_number=${id}
                                   ))
-AND EXISTS (SELECT * FROM checks where id_employee=e.id_employee)`;
+                AND EXISTS (SELECT * FROM checks where id_employee=e.id_employee)`;
     return result.map((row: any) => ({
       id: row.id_employee,
       name: row.empl_name,

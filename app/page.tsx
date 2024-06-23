@@ -32,14 +32,15 @@ export default async function Home() {
           <h1 className="text-slate-200 text-9xl">ZLAGODA</h1>
         </div>
         <div className="flex flex-wrap max-w-[800px] gap-16">
-          {role !== "cashier" && (<><div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
+          <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <ShoppingCart className="w-20 h-20 text-slate-300"/>
-            <Link href="products"><Button variant="outline" className="text-slate-200">Manage products</Button></Link>
+            <Link href="products"><Button variant="outline" className="text-slate-200">{role !== "cashier" ? "Manage products" : "Products"}</Button></Link>
           </div>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <Store className="w-20 h-20 text-slate-300"/>
-            <Link href="store_product"><Button variant="outline" className="text-slate-200">Manage products in shop</Button></Link>
+            <Link href="store_product"><Button variant="outline" className="text-slate-200">{role !== "cashier" ? "Manage products is shop" : "Products in shop"}</Button></Link>
           </div>
+          {role !== "cashier" && (<>
           <div className="w-56 h-48 flex flex-col items-center justify-center gap-y-8 border-2 rounded-lg border-slate-400">
             <Layers3 className="w-20 h-20 text-slate-300"/>
             <Link href="category"><Button variant="outline" className="text-slate-200">Manage categories</Button></Link>

@@ -7,7 +7,7 @@ export const req2Andrii = async (id: string) => {
                 FROM customer_card AS cc
                 WHERE NOT EXISTS (SELECT UPC
                 FROM sale AS s INNER JOIN checks AS c ON c.check_number=s.check_number
-                                                    WHERE card_number = cc.card_number
+                                                   WHERE card_number = cc.card_number
                                                     AND UPC NOT IN (SELECT UPC
                 FROM sale AS s2 INNER JOIN checks AS c2 ON c2.check_number=s2.check_number
                 WHERE card_number =

@@ -27,22 +27,32 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  role: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  role
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
+  const filterColumns = <TData, TValue>(columns: ColumnDef<TData, TValue>[], role: string): ColumnDef<TData, TValue>[] => {
+    if (role == "cashier") {
+      return columns.slice(0, -1);
+    }
+    return columns;
+  };
+
+  const filteredColumns = filterColumns(columns, role);
+
   const table = useReactTable({
     data,
-    columns,
+    columns: filteredColumns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
@@ -53,9 +63,14 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+
   return (
     <div>
-      <div className="flex items-center py-4 justify-between">
+      <div className="flex items-center py-4 justify-between print:hidden">
         <Input
           placeholder="Filter store product..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -64,12 +79,14 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm mr-2"
         />
+        {role !== "cashier" && (<>
         <Link href="/add_store_product">
           <Button>
             <PlusCircle className="h-4 w-4 mr-2"/>
             New store product
           </Button>
         </Link>
+        <Button onClick={handlePrint} className="bg-slate-400">Print report</Button></>)}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -114,24 +131,6 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
       </div>
     </div>
   )

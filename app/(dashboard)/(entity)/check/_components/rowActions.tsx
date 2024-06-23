@@ -7,13 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Ellipsis, Trash } from "lucide-react"
@@ -24,9 +17,10 @@ import toast from "react-hot-toast"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
+  role: string
 }
 
-export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData>({row, role}: DataTableRowActionsProps<TData>) {
     const router = useRouter();
     const handleDeleteCheck = async (id: string) => {
         try{
@@ -55,11 +49,12 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
           <Button variant="ghost"><Link href={`/check/${prod.id}`}>See details</Link>
           </Button>
           </DropdownMenuItem>
+          {role !== "cashier" && (<>
         <DropdownMenuItem>
             <Button variant="ghost" onClick={() => handleDeleteCheck(prod.id)}>
                 <Trash className="h-3 w-3 text-slate-600 mr-2"/> Delete 
             </Button>
-        </DropdownMenuItem>
+        </DropdownMenuItem></>)}
       </DropdownMenuContent>
     </DropdownMenu>
   )

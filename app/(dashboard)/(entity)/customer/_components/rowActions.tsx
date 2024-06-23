@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Ellipsis, Pen, PenTool, Trash } from "lucide-react"
+import { BookOpenText, Ellipsis, Pen, PenTool, Trash } from "lucide-react"
 import Link from "next/link"
 import axios from "axios"
 import { useRouter } from "next/navigation";
@@ -17,9 +17,10 @@ import toast from "react-hot-toast"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
+  role: string
 }
 
-export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData>({row, role}: DataTableRowActionsProps<TData>) {
     const router = useRouter();
     const handleDeleteCustomer = async (id: string) => {
         try{
@@ -33,7 +34,7 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
     const customer = row.original as { id: string };;
 
   return (
-    <DropdownMenu>
+    <DropdownMenu >
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -45,9 +46,14 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-36 bg-white">
         <DropdownMenuItem>
+          <Button variant="ghost"><Link href={`/customer/${customer.id}/full_info`} className="flex flex-row items-center"><BookOpenText className="h-3 w-3 text-slate-600 mr-2"/>Full info  </Link>
+          </Button>
+          </DropdownMenuItem>
+        <DropdownMenuItem>
           <Button variant="ghost"><Link href={`/customer/${customer.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
           </Button>
           </DropdownMenuItem>
+        {role !== "cashier" && (<>
         <DropdownMenuItem>
             <Button variant="ghost" onClick={() => handleDeleteCustomer(customer.id)}>
                 <Trash className="h-3 w-3 text-slate-600 mr-2"/> Delete 
@@ -56,7 +62,7 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
         <DropdownMenuItem>
           <Button variant="ghost"><Link href={`/custom_requests/andrii2/${customer.id}`} className="flex flex-row items-center">Similar clients</Link>
           </Button>
-          </DropdownMenuItem>
+          </DropdownMenuItem></>)}
       </DropdownMenuContent>
     </DropdownMenu>
   )

@@ -163,7 +163,7 @@ export const columns: ColumnDef<Check>[] = [{
       const id  = row.getValue("id");
 
       return (
-        <DataTableRowActions row={row}/>
+        <></>
       )
     }
   }

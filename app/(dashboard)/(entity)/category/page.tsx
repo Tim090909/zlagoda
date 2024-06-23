@@ -27,7 +27,8 @@ export default async function Page() {
 
   return (
     <div className='p-6 w-full lg:w-[1024px] mx-auto'>
-      <div className='w-full my-4 flex justify-end'>
+      <h2 className='hidden print:block text-2xl font-semibold my-8'>Category report</h2>
+      <div className='w-full my-4 flex justify-end print:hidden'>
         <Button className='bg-slate-700 text-slate-200'><Link href="/">Back</Link></Button>
       </div>
       <DataTable columns={columns} data={categories_fdb} />

@@ -1,4 +1,3 @@
-import { req1Nazar } from '@/actions/(custom_requests)/req1_nazar'
 import { req2Tymofii } from '@/actions/(custom_requests)/req2_tymofii';
 import React from 'react'
 import { columns } from './_components/columns';

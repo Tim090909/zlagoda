@@ -32,28 +32,7 @@ export type Employee = {
 }
 
 
-export const columns: ColumnDef<Employee>[] = [{
-  id: "select",
-  header: ({ table }) => (
-    <Checkbox
-      checked={
-        table.getIsAllPageRowsSelected() ||
-        (table.getIsSomePageRowsSelected() && "indeterminate")
-      }
-      onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-      aria-label="Select all"
-    />
-  ),
-  cell: ({ row }) => (
-    <Checkbox
-      checked={row.getIsSelected()}
-      onCheckedChange={(value) => row.toggleSelected(!!value)}
-      aria-label="Select row"
-    />
-  ),
-  enableSorting: false,
-  enableHiding: false,
-},
+export const columns: ColumnDef<Employee>[] = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -161,24 +140,7 @@ export const columns: ColumnDef<Employee>[] = [{
       return <div>{formatted}</div>
     }
   },
-  {
-    accessorKey: "dob",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Date of Birth
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const formattedDate = new Date(row.getValue('dob')).toLocaleDateString('en-GB'); 
-      return <span>{formattedDate}</span>;
-    }
-  },
+ 
   {
     accessorKey: "dos",
     header: ({ column }) => {
@@ -206,48 +168,6 @@ export const columns: ColumnDef<Employee>[] = [{
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Phone
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  {
-    accessorKey: "city",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          City
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  {
-    accessorKey: "street",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Street
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-  },
-  {
-    accessorKey: "zip_code",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Zip code
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
