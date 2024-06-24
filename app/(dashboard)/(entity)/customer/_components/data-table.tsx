@@ -69,14 +69,6 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm mr-2"
         />
-        <Input
-          placeholder="Filter customers by percent"
-          value={(table.getColumn("percent")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("percent")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm mr-2"
-        />
         {role !== "cashier" && (<>
         <Link href="/custom_requests/andrii1">
           <Button className="bg-slate-400">
