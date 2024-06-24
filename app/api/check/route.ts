@@ -1,6 +1,8 @@
 import { sql } from "@/lib/db";
 import { generateUniqueCheckId } from "@/lib/id_generator";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
+import { options } from "../auth/[...nextauth]/options";
 
 interface Product {
     upc: string;
@@ -12,8 +14,8 @@ export async function POST(req: Request) {
     try{
         const {client_id, products} = await req.json();
         
-        //TODO "login"
-        const emplId = "4qHl4PMiVT";
+        const session = await getServerSession(options);
+        const emplId = session?.user.id || "4qHl4PMiVT";
 
         const sumTotal = products.reduce((total: number, product: Product) => {
             return total + product.price * product.amount;

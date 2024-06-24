@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { BarChart, BookOpenText, Ellipsis, Pen, Trash } from "lucide-react"
+import { BarChart, BookOpenText, Ellipsis, Pen, Receipt, Trash } from "lucide-react"
 import Link from "next/link"
 import axios from "axios"
 import { useRouter } from "next/navigation";
@@ -47,7 +47,11 @@ export function DataTableRowActions<TData>({row}: DataTableRowActionsProps<TData
       <DropdownMenuItem>
           <Button variant="ghost"><Link href={`/employee/${employee.id}/full_info`} className="flex flex-row items-center"><BookOpenText className="h-3 w-3 text-slate-600 mr-2"/>Full info  </Link>
           </Button>
-          </DropdownMenuItem>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Button variant="ghost"><Link href={`/employee/${employee.id}/checks`} className="flex flex-row items-center"><Receipt className="h-3 w-3 text-slate-600 mr-2"/>Checks</Link>
+          </Button>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <Button variant="ghost"><Link href={`/employee/${employee.id}`} className="flex flex-row items-center"><Pen className="h-3 w-3 text-slate-600 mr-2"/>Edit  </Link>
           </Button>
